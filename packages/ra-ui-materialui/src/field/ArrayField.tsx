@@ -1,4 +1,4 @@
-import { Component, cloneElement, Children } from 'react';
+import {Component, cloneElement, Children, ReactNode, ReactElement} from 'react';
 import get from 'lodash/get';
 import pure from 'recompose/pure';
 import { Identifier } from 'ra-core';
@@ -125,7 +125,7 @@ export class ArrayField extends Component<
         } = this.props;
         const { ids, data } = this.state;
 
-        return cloneElement(Children.only(children), {
+        return cloneElement(Children.only(children) as ReactElement<any>, {
             ids,
             data,
             isLoading: false,

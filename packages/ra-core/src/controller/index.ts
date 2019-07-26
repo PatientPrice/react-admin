@@ -4,7 +4,7 @@ import {
 } from './ListController';
 import CreateController from './CreateController';
 import EditController from './EditController';
-import ListController from './ListController';
+import ListController, {selectListControllerQuery} from './ListController';
 import ShowController from './ShowController';
 export {
     getListControllerProps,

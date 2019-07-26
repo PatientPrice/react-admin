@@ -20,6 +20,9 @@ import SearchInput from './SearchInput';
 import SelectArrayInput from './SelectArrayInput';
 import SelectInput from './SelectInput';
 import TextInput from './TextInput';
+import JSONInput from './JSONInput';
+import ReferenceManyListInput from './ReferenceManyListInput';
+import ReferenceListInput from './ReferenceListInput';
 
 export {
     ArrayInput,
@@ -44,4 +47,7 @@ export {
     SelectArrayInput,
     SelectInput,
     TextInput,
+    JSONInput,
+    ReferenceManyListInput,
+    ReferenceListInput
 };

@@ -93,6 +93,7 @@ const PureDatagridBody = shouldUpdate(
         props.version !== nextProps.version ||
         nextProps.isLoading === false ||
         !areArraysEqual(props.ids, nextProps.ids) ||
+        !areArraysEqual(props.selectedIds, nextProps.selectedIds) ||
         props.data !== nextProps.data
 )(DatagridBody);
 

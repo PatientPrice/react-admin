@@ -311,6 +311,16 @@ export class UnconnectedListController extends Component<
             perPage: parseInt(perPage, 10),
         };
         const permanentFilter = this.props.filter;
+        console.log({
+            props: this.props,
+            resource: this.props.resource,
+            query,
+            pagination,
+            sort,
+            order,
+            filter,
+            permanentFilter
+        });
         this.props.crudGetList(
             this.props.resource,
             pagination,
@@ -481,7 +491,7 @@ export const sanitizeListRestProps = props =>
 const validQueryParams = ['page', 'perPage', 'sort', 'order', 'filter'];
 const getLocationPath = props => props.location.pathname;
 const getLocationSearch = props => props.location.search;
-const selectQuery = createSelector(
+export const selectListControllerQuery = createSelector(
     getLocationPath,
     getLocationSearch,
     (path, search) => {
@@ -504,7 +514,7 @@ function mapStateToProps(state, props) {
     const resourceState = state.admin.resources[props.resource];
 
     return {
-        query: selectQuery(props),
+        query: selectListControllerQuery(props),
         params: resourceState.list.params,
         ids: resourceState.list.ids,
         loadedOnce: resourceState.list.loadedOnce,

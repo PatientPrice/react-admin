@@ -180,7 +180,7 @@ export class CoreAdminRouter extends Component<
                 {// Render every resources children outside the React Router Switch
                 // as we need all of them and not just the one rendered
                 Children.map(
-                    childrenToRender,
+                    childrenToRender as React.ReactNode,
                     (child: React.ReactElement<ResourceProps>) =>
                         cloneElement(child, {
                             key: child.props.name,
@@ -223,7 +223,7 @@ export class CoreAdminRouter extends Component<
                                     title={title}
                                 >
                                     {Children.map(
-                                        childrenToRender,
+                                        childrenToRender as React.ReactNode,
                                         (
                                             child: React.ReactElement<
                                                 ResourceProps

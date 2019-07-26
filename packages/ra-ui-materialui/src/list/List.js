@@ -98,23 +98,26 @@ const sanitizeRestProps = ({
 }) => rest;
 
 export const ListView = withStyles(styles)(
-    ({
-        actions,
-        aside,
-        filter,
-        filters,
-        bulkActions,
-        bulkActionButtons,
-        pagination,
-        children,
-        className,
-        classes,
-        exporter,
-        title,
-        ...rest
-    }) => {
+    props => {
+        const {
+            actions,
+            aside,
+            filter,
+            filters,
+            bulkActions,
+            bulkActionButtons,
+            pagination,
+            children,
+            className,
+            classes,
+            exporter,
+            title,
+            ...rest
+        } = props
+        console.log(props)
         const { defaultTitle, version } = rest;
         const controllerProps = getListControllerProps(rest);
+        console.log(controllerProps)
         return (
             <div
                 className={classnames('list-page', classes.root, className)}
@@ -252,7 +255,10 @@ ListView.defaultProps = {
  */
 const List = props => (
     <ListController {...props}>
-        {controllerProps => <ListView {...props} {...controllerProps} />}
+        {controllerProps => {
+            console.log({controllerProps, props})
+            return (<ListView {...props} {...controllerProps} />)
+        }}
     </ListController>
 );
 
