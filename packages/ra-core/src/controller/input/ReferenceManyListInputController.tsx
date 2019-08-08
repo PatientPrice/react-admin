@@ -152,7 +152,7 @@ export class UnconnectedReferenceManyListInputController extends Component<Props
         filter: {},
         filterToQuery: searchQuery => searchQuery,
         matchingReferences: null,
-        perPage: 25,
+        perPage: 10,
         sort: {field: 'id', order: 'DESC'},
         referenceRecords: [],
         referenceSource: defaultReferenceSource, // used in unit tests
@@ -183,14 +183,9 @@ export class UnconnectedReferenceManyListInputController extends Component<Props
 
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
-
-        console.log(this)
     }
 
     componentDidMount() {
-        console.log("componentDidMount");
-        console.log(this.props);
-
         const metaSource = this.props.source.replace(".id", ".meta");
         this.props.meta["dispatch"](
             change(
@@ -344,16 +339,6 @@ export class UnconnectedReferenceManyListInputController extends Component<Props
             perPage: parseInt(perPage, 10),
         };
         const permanentFilter = this.props.filter;
-        console.log({
-            props: this.props,
-            resource: this.props.reference,
-            query,
-            pagination,
-            sort,
-            order,
-            filter,
-            permanentFilter
-        });
         this.props.crudGetList(
             this.props.reference,
             pagination,
@@ -411,18 +396,16 @@ export class UnconnectedReferenceManyListInputController extends Component<Props
 
     setIds = (ids) => {
         const uniqueIds = uniq<string>(ids);
-
-        console.log("change form");
         this.props.input.onChange(uniqueIds);
-
-        console.log("change filter");
         this.setFilter({
             "name": "id",
             "op": "in_",
             "val": uniqueIds.map(x => parseInt(x))
         });
-
-        console.log("change state");
+        this.setPagination({
+            page: 1,
+            perPage: uniqueIds.length
+        });
         this.handleClose()
     };
 
@@ -432,7 +415,6 @@ export class UnconnectedReferenceManyListInputController extends Component<Props
     };
 
     onAppendIds = (source, ids) => {
-        console.log({source, ids, props: this.props});
         this.setIds([
             ...(this.props.input.value || []),
             ...ids
@@ -440,11 +422,9 @@ export class UnconnectedReferenceManyListInputController extends Component<Props
     };
 
     onRemoveIds = (source, selectedIds) => {
-        console.log({source, selectedIds, props: this.props});
         const keepIds = this.props.input.value.filter(
             val => !selectedIds.includes(val)
         );
-        console.log(keepIds);
         this.setIds([
             ...keepIds
         ]);
@@ -493,7 +473,6 @@ export class UnconnectedReferenceManyListInputController extends Component<Props
                     get(currentProps, 'input.value', [])
                 );
                 if (idsToFetch.length) {
-                    console.log({currentProps, nextProps});
                     crudGetMany(reference, idsToFetch);
                 }
             }
@@ -511,7 +490,6 @@ export class UnconnectedReferenceManyListInputController extends Component<Props
         } = props;
         const {pagination, sort, filter} = this.params;
 
-        console.log({props: this.props, params: this.params});
         crudGetMatching(
             reference,
             referenceSource(resource, source),
@@ -602,8 +580,6 @@ export class UnconnectedReferenceManyListInputController extends Component<Props
             name: referenceName,
         });
 
-        console.log(this.props);
-
         const passParams = {
             filters,
             input,
@@ -663,7 +639,6 @@ export class UnconnectedReferenceManyListInputController extends Component<Props
             version,
         };
 
-        console.log(passParams);
         return children(passParams);
     }
 }
@@ -676,7 +651,6 @@ const makeMapStateToProps = () =>
             (_, {input: {value: referenceIds}}) => referenceIds || [],
         ],
         (referenceState, possibleValues, inputIds) => {
-            console.log({referenceState, possibleValues, inputIds});
             return (
                 {
                     matchingReferences: getPossibleReferences(
@@ -697,8 +671,6 @@ const makeMapStateToProps = () =>
     );
 
 function mapStateToProps(state, props) {
-    console.log(props);
-
     const resourceState = state.admin.resources[props.reference];
     const referenceBasePath = props.basePath.replace(props.resource, props.reference);
 
@@ -721,7 +693,6 @@ function mapStateToProps(state, props) {
         location: state.router.location,
         ...makeMapStateToProps()
     };
-    console.log({props, mapProps});
     return mapProps
 }
 

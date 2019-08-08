@@ -90,6 +90,7 @@ interface Props {
     hasEdit?: boolean;
     hasList?: boolean;
     hasShow?: boolean;
+    noPush: boolean;
     location: Location;
     path?: string;
     query: ListParams;
@@ -165,6 +166,7 @@ export class UnconnectedListController extends Component<
             field: 'id',
             order: SORT_DESC,
         },
+        noPush: false
     };
 
     state = {};
@@ -311,16 +313,6 @@ export class UnconnectedListController extends Component<
             perPage: parseInt(perPage, 10),
         };
         const permanentFilter = this.props.filter;
-        console.log({
-            props: this.props,
-            resource: this.props.resource,
-            query,
-            pagination,
-            sort,
-            order,
-            filter,
-            permanentFilter
-        });
         this.props.crudGetList(
             this.props.resource,
             pagination,
@@ -366,13 +358,15 @@ export class UnconnectedListController extends Component<
 
     changeParams(action) {
         const newParams = queryReducer(this.getQuery(), action);
-        this.props.push({
-            ...this.props.location,
-            search: `?${stringify({
-                ...newParams,
-                filter: JSON.stringify(newParams.filter),
-            })}`,
-        });
+        if (!this.props.noPush) {
+            this.props.push({
+                ...this.props.location,
+                search: `?${stringify({
+                    ...newParams,
+                    filter: JSON.stringify(newParams.filter),
+                })}`,
+            });
+        }
         this.props.changeListParams(this.props.resource, newParams);
     }
 
@@ -455,6 +449,7 @@ const injectedProps = [
     'onSelect',
     'onToggleItem',
     'onUnselectItems',
+    'noPush',
     'page',
     'perPage',
     'refresh',
@@ -514,7 +509,7 @@ function mapStateToProps(state, props) {
     const resourceState = state.admin.resources[props.resource];
 
     return {
-        query: selectListControllerQuery(props),
+        query: props.noPush ? resourceState.list.params : selectListControllerQuery(props),
         params: resourceState.list.params,
         ids: resourceState.list.ids,
         loadedOnce: resourceState.list.loadedOnce,
