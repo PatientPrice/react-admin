@@ -20,9 +20,13 @@ import SearchInput from './SearchInput';
 import SelectArrayInput from './SelectArrayInput';
 import SelectInput from './SelectInput';
 import TextInput from './TextInput';
+
 import JSONInput from './JSONInput';
+
+import ReferenceArrayListInput, {ReferenceArrayListActions} from './ReferenceArrayListInput';
 import ReferenceManyListInput from './ReferenceManyListInput';
 import ReferenceListInput from './ReferenceListInput';
+import ReferenceManyListActions from './ReferenceManyListActions'
 
 export {
     ArrayInput,
@@ -47,7 +51,12 @@ export {
     SelectArrayInput,
     SelectInput,
     TextInput,
+
     JSONInput,
+
+    ReferenceArrayListInput,
+    ReferenceArrayListActions,
     ReferenceManyListInput,
-    ReferenceListInput
+    ReferenceListInput,
+    ReferenceManyListActions
 };

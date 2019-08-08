@@ -10,6 +10,7 @@ import NumberField from './NumberField';
 import ReferenceField from './ReferenceField';
 import ReferenceArrayField from './ReferenceArrayField';
 import ReferenceManyField from './ReferenceManyField';
+import PartialReferenceArrayField from './PartialReferenceArrayField';
 import RichTextField from './RichTextField';
 import SelectField from './SelectField';
 import TextField from './TextField';
@@ -28,6 +29,7 @@ export {
     ReferenceField,
     ReferenceArrayField,
     ReferenceManyField,
+    PartialReferenceArrayField,
     RichTextField,
     SelectField,
     TextField,

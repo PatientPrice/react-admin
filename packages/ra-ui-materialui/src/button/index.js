@@ -15,6 +15,9 @@ import ShowButton from './ShowButton';
 import RefreshButton from './RefreshButton';
 import RefreshIconButton from './RefreshIconButton';
 
+import AppendButton from './AppendButton';
+import RemoveButton from './RemoveButton';
+
 export {
     BulkDeleteButton,
     BulkDeleteWithConfirmButton,
@@ -32,4 +35,7 @@ export {
     ShowButton,
     RefreshButton,
     RefreshIconButton,
+
+    AppendButton,
+    RemoveButton
 };

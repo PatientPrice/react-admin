@@ -16,8 +16,6 @@ export const ReferenceManyListActions = props => {
         handleShow,
     } = props
 
-    console.log(props)
-
     return (
         <CardActions>
             {bulkActions && React.cloneElement(bulkActions, {

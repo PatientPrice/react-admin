@@ -15,12 +15,10 @@ class RemoveButton extends Component {
             ...other
         } = this.props;
 
-        console.log(this.props)
         clickHandler(source, selectedIds);
     };
 
     render() {
-        console.log(this.props)
         return (
             <Button label="Remove" onClick={this.handleClick}/>
         );

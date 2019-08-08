@@ -15,13 +15,10 @@ class AppendButton extends Component {
         ...other
       } = this.props;
 
-    console.log(this.props)
-
       clickHandler(source, selectedIds);
     };
 
     render() {
-        console.log(this.props)
       return (
           <Button label="Append Selected" onClick={this.handleClick} />
       );

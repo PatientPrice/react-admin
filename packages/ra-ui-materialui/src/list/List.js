@@ -1,9 +1,9 @@
-import React, { Children, cloneElement } from 'react';
+import React, {Children, cloneElement} from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import classnames from 'classnames';
-import { withStyles, createStyles } from '@material-ui/core/styles';
-import { ListController, getListControllerProps } from 'ra-core';
+import {withStyles, createStyles} from '@material-ui/core/styles';
+import {ListController, getListControllerProps} from 'ra-core';
 
 import Title from '../layout/Title';
 import ListToolbar from './ListToolbar';
@@ -18,10 +18,18 @@ const DefaultBulkActionButtons = props => <BulkDeleteButton {...props} />;
 export const styles = createStyles({
     root: {
         display: 'flex',
+        position: 'absolute',
+        width: '100%'
     },
     card: {
         position: 'relative',
         flex: '1 1 auto',
+    },
+    content: {
+        overflow: 'auto',
+        '&::-webkit-scrollbar': {
+            display: 'none'
+        }
     },
     actions: {
         zIndex: 2,
@@ -34,68 +42,69 @@ export const styles = createStyles({
         justifyContent: 'space-between',
         alignSelf: 'flex-start',
     },
-    noResults: { padding: 20 },
+    noResults: {padding: 20},
 });
 
 const sanitizeRestProps = ({
-    actions,
-    basePath,
-    bulkActions,
-    changeListParams,
-    children,
-    classes,
-    className,
-    crudGetList,
-    currentSort,
-    data,
-    defaultTitle,
-    displayedFilters,
-    exporter,
-    filter,
-    filterDefaultValues,
-    filters,
-    filterValues,
-    hasCreate,
-    hasEdit,
-    hasList,
-    hasShow,
-    hideFilter,
-    history,
-    ids,
-    isLoading,
-    loadedOnce,
-    locale,
-    location,
-    match,
-    onSelect,
-    onToggleItem,
-    onUnselectItems,
-    options,
-    page,
-    pagination,
-    params,
-    permissions,
-    perPage,
-    push,
-    query,
-    refresh,
-    resource,
-    selectedIds,
-    setFilters,
-    setPage,
-    setPerPage,
-    setSelectedIds,
-    setSort,
-    showFilter,
-    sort,
-    theme,
-    title,
-    toggleItem,
-    total,
-    translate,
-    version,
-    ...rest
-}) => rest;
+                               actions,
+                               basePath,
+                               bulkActions,
+                               changeListParams,
+                               children,
+                               classes,
+                               className,
+                               crudGetList,
+                               currentSort,
+                               data,
+                               defaultTitle,
+                               displayedFilters,
+                               exporter,
+                               filter,
+                               filterDefaultValues,
+                               filters,
+                               filterValues,
+                               hasCreate,
+                               hasEdit,
+                               hasList,
+                               hasShow,
+                               hideFilter,
+                               history,
+                               ids,
+                               isLoading,
+                               loadedOnce,
+                               locale,
+                               location,
+                               match,
+                               noPush,
+                               onSelect,
+                               onToggleItem,
+                               onUnselectItems,
+                               options,
+                               page,
+                               pagination,
+                               params,
+                               permissions,
+                               perPage,
+                               push,
+                               query,
+                               refresh,
+                               resource,
+                               selectedIds,
+                               setFilters,
+                               setPage,
+                               setPerPage,
+                               setSelectedIds,
+                               setSort,
+                               showFilter,
+                               sort,
+                               theme,
+                               title,
+                               toggleItem,
+                               total,
+                               translate,
+                               version,
+                               ...rest
+                           }) => rest;
 
 export const ListView = withStyles(styles)(
     props => {
@@ -114,25 +123,25 @@ export const ListView = withStyles(styles)(
             title,
             ...rest
         } = props
-        console.log(props)
-        const { defaultTitle, version } = rest;
+
+        const {defaultTitle, version} = rest;
         const controllerProps = getListControllerProps(rest);
-        console.log(controllerProps)
+
         return (
             <div
                 className={classnames('list-page', classes.root, className)}
                 {...sanitizeRestProps(rest)}
             >
-                <Title title={title} defaultTitle={defaultTitle} />
+                <Title title={title} defaultTitle={defaultTitle}/>
                 <Card className={classes.card}>
                     {bulkActions !== false &&
-                        bulkActionButtons !== false &&
-                        bulkActionButtons &&
-                        !bulkActions && (
-                            <BulkActionsToolbar {...controllerProps}>
-                                {bulkActionButtons}
-                            </BulkActionsToolbar>
-                        )}
+                    bulkActionButtons !== false &&
+                    bulkActionButtons &&
+                    !bulkActions && (
+                        <BulkActionsToolbar {...controllerProps}>
+                            {bulkActionButtons}
+                        </BulkActionsToolbar>
+                    )}
                     {(filters || actions) && (
                         <ListToolbar
                             filters={filters}
@@ -143,17 +152,18 @@ export const ListView = withStyles(styles)(
                             permanentFilter={filter}
                         />
                     )}
-                    <div key={version}>
+                    <div key={version} className={classes.content}>
                         {children &&
-                            cloneElement(Children.only(children), {
-                                ...controllerProps,
-                                hasBulkActions:
-                                    bulkActions !== false &&
-                                    bulkActionButtons !== false,
-                            })}
-                        {pagination &&
-                            cloneElement(pagination, controllerProps)}
+                        cloneElement(Children.only(children), {
+                            ...controllerProps,
+                            hasBulkActions:
+                                bulkActions !== false &&
+                                bulkActionButtons !== false,
+                        })}
+
                     </div>
+                    {pagination &&
+                    cloneElement(pagination, controllerProps)}
                 </Card>
                 {aside && cloneElement(aside, controllerProps)}
             </div>
@@ -206,10 +216,10 @@ ListView.propTypes = {
 };
 
 ListView.defaultProps = {
-    actions: <DefaultActions />,
+    actions: <DefaultActions/>,
     classes: {},
-    bulkActionButtons: <DefaultBulkActionButtons />,
-    pagination: <DefaultPagination />,
+    bulkActionButtons: <DefaultBulkActionButtons/>,
+    pagination: <DefaultPagination/>,
 };
 
 /**
@@ -256,7 +266,6 @@ ListView.defaultProps = {
 const List = props => (
     <ListController {...props}>
         {controllerProps => {
-            console.log({controllerProps, props})
             return (<ListView {...props} {...controllerProps} />)
         }}
     </ListController>

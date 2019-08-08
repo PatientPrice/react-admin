@@ -26,6 +26,7 @@ import defaultTheme from "../defaultTheme"
 
 import ReferenceManyListActions from "./ReferenceManyListActions"
 import InputLabel from "@material-ui/core/InputLabel"
+import FormControl from "@material-ui/core/FormControl"
 
 const styles = theme =>
     createStyles({
@@ -78,6 +79,37 @@ const styles = theme =>
             display: 'block',
             width: '100%',
         },
+        fullWith: {
+            display: 'block',
+        },
+        refRoot: {
+            display: 'flex',
+            position: 'absolute',
+            width: `calc(100%)`,
+            marginBottom: theme.spacing * 2,
+        },
+        refCard: {
+            position: 'relative',
+            flex: '1 1 auto',
+        },
+        refContent: {
+            overflow: 'auto',
+            '&::-webkit-scrollbar': {
+                display: 'none'
+            }
+        },
+        refActions: {
+            zIndex: 2,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            flexWrap: 'wrap',
+        },
+        refHeader: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignSelf: 'flex-start',
+        },
+        refNoResults: {padding: 20},
     });
 
 const sanitizeRestProps = (
@@ -131,8 +163,6 @@ const sanitizeRestProps = (
 ) => rest;
 
 const UnstyledListView = props => {
-
-    console.log(props)
 
     const {
         // from ReferenceArrayInputView
@@ -233,9 +263,18 @@ const UnstyledListView = props => {
         translate,
         version,
     }
+    const searchClasses = {
+        root: classes.root,
+        card: classes.card,
+        content: classes.content,
+        actions: classes.actions,
+        header: classes.header,
+        noResults: classes.noResults
+    }
 
     const searchListProps = {
         children: searchGrid === undefined ? children : searchGrid,
+        classes: searchClasses,
         ids,
         total,
         loadedOnce,
@@ -248,9 +287,18 @@ const UnstyledListView = props => {
             clickHandler={onAppendIds}
         />,
     }
+    const referenceClasses = {
+        root: classes.refRoot,
+        card: classes.refCard,
+        content: classes.refContent,
+        actions: classes.refActions,
+        header: classes.refHeader,
+        noResults: classes.refNoResults,
+    }
 
     const referenceListProps = {
         children,
+        classes: referenceClasses,
         ids: referenceIds,
         total: referenceIds.length,
         loadedOnce: data !== undefined,
@@ -261,16 +309,16 @@ const UnstyledListView = props => {
             source={source}
             clickHandler={onRemoveIds}
         />,
+        perPage: referenceIds.length
     }
 
-    console.log({
-        "search": {...{...listParams, ...searchListProps}},
-        "reference": {...{...listParams, ...referenceListProps}}
-    })
-
     return (
-        <div>
-
+        <FormControl
+            margin="normal"
+            fullWidth={true}
+            classes={classes.fullWidth}
+            error={meta && meta.touched && !!meta.error}
+        >
             <InputLabel htmlFor={id} shrink className={classes.label}>
                 <FieldTitle
                     label={translatedLabel}
@@ -318,7 +366,7 @@ const UnstyledListView = props => {
                     }
                 </div>
             </Dialog>
-        </div>
+        </FormControl>
     )
 };
 
@@ -400,15 +448,9 @@ export const ReferenceManyListInput = ({children, ...props}) => {
             '<ReferenceManyListInput> only accepts a single child (like <Datagrid>)'
         );
     }
-    console.log(props)
     return (
         <ReferenceManyListInputController {...props}>
             {controllerProps => {
-                console.log({
-                    props,
-                    controllerProps,
-                    children
-                })
                 return (
                     <ReferenceManyListInputView
                         {...props}
@@ -456,7 +498,7 @@ ReferenceManyListInput.defaultProps = {
     allowEmpty: false,
     filter: {},
     filterToQuery: searchText => searchText,
-    perPage: 25,
+    perPage: 20,
     sort: {field: 'id', order: 'DESC'},
     theme: defaultTheme,
     filterValues: {},
@@ -481,20 +523,7 @@ ReferenceManyListInput.defaultProps = {
     version: 1,
 };
 
-
-const addRelatedField = (BaseComponent, fieldProps) => {
-    console.log(BaseComponent)
-    console.log(fieldProps)
-    return props => (
-        <div>
-            <FormField component={BaseComponent} {...fieldProps} {...props} />
-        </div>
-    )
-}
-
 const EnhancedReferenceManyListInput = compose(
-    // addField,
-    // addRelatedField,
     addField,
     translate
 )(ReferenceManyListInput);

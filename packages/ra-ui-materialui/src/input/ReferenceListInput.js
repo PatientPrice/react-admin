@@ -143,8 +143,6 @@ const sanitizeRestProps = (
 
 const UnstyledListView = props => {
 
-    console.log(props)
-
     const {
         // from ReferenceArrayInputView
         actions,
@@ -275,10 +273,6 @@ const UnstyledListView = props => {
         loadedOnce,
         filters,
     }
-
-    console.log({
-        "list": {...listParams},
-    })
 
     return (
         <div>
@@ -430,15 +424,9 @@ export const ReferenceListInput = ({children, ...props}) => {
             '<ReferenceListInput> only accepts a single child (like <Datagrid>)'
         );
     }
-    console.log(props)
     return (
         <ReferenceManyListInputController {...props}>
             {controllerProps => {
-                console.log({
-                    props,
-                    controllerProps,
-                    children
-                })
                 return (
                     <ReferenceListInputView
                         {...props}
@@ -510,37 +498,8 @@ ReferenceListInput.defaultProps = {
     translate: x => x,
     version: 1,
 };
-const addRelatedField = (BaseComponent, fieldProps) => {
-    console.log("added related field")
-    console.log(BaseComponent)
-    console.log(fieldProps)
-
-    return props => {
-        console.log({props, fieldProps})
-        const metaSource = props.source.replace(".id", ".meta")
-        return (
-            <div>
-                <FormField component={BaseComponent} {...fieldProps} {...props} />
-                {/*<FormField*/}
-                {/*    component={<Hidden/>}*/}
-                {/*    source={metaSource}*/}
-                {/*    input={undefined}*/}
-                {/*    defaultValue={{reference: props.reference}}*/}
-                {/*/>*/}
-                <Field
-                    component={HiddenInput}
-                    name={metaSource}
-                    type="hidden"
-                    style={{ height: 0 }}
-                    value={{reference: props.reference}}
-                />
-            </div>
-        )
-    }
-}
 
 const EnhancedReferenceListInput = compose(
-    // addRelatedField,
     addField,
     translate
 )(ReferenceListInput);
