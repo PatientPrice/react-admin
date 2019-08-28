@@ -80,6 +80,7 @@ export const SimpleShowLayout = ({
                             label={field.props.label}
                             source={field.props.source}
                             disabled={false}
+                            fullWidth={field.props.fullWidth}
                         >
                             {field}
                         </Labeled>

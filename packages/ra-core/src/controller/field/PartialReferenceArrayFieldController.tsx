@@ -233,7 +233,8 @@ const mapStateToProps = (state, props) => {
         data
     } = props;
 
-    const ids = props.ids || get(record, source) || [];
+    const idsRaw = props.ids || get(record, source) || [];
+    const ids = Array.isArray(idsRaw) ? idsRaw : [idsRaw];
 
     return {
         ids,

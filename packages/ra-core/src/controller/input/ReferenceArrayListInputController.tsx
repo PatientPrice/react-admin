@@ -254,9 +254,8 @@ const mapStateToProps = (state, props) => {
     const resourceState = state.admin.resources[props.reference];
     const referenceBasePath = props.basePath.replace(props.resource, props.reference);
 
-    const formState = get(state.form["record-form"].values, props.source)
+    const inputVal = state.form["record-form"] ? get(state.form["record-form"].values, props.source) : null
     // const inputVal = props.input.value === "" ? null : props.input.value
-    const inputVal = formState
     const isArrayInput = Array.isArray(inputVal)
 
     return {
