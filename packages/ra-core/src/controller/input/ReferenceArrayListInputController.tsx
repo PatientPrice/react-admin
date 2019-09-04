@@ -7,8 +7,8 @@ import get from 'lodash/get';
 
 import withTranslate from '../../i18n/translate';
 
-import { crudGetManyAccumulate as crudGetManyAccumulateAction } from '../../actions';
-import { getReferencesByIds } from '../../reducer/admin/references/oneToMany';
+import {crudGetManyAccumulate as crudGetManyAccumulateAction} from '../../actions';
+import {getReferencesByIds} from '../../reducer/admin/references/oneToMany';
 import {Dispatch, Identifier, Record, RecordMap, Sort} from "../../types";
 
 
@@ -268,10 +268,16 @@ const mapStateToProps = (state, props) => {
         referenceType: resourceState.props.options.referenceType || props.reference,
         resource: props.resource,
         isArrayInput,
-        ids: isArrayInput ? inputVal : inputVal === null ? null : [inputVal],
+        ids: isArrayInput
+            ? inputVal
+            : inputVal === null || inputVal === undefined
+                ? null
+                : [inputVal],
         data: isArrayInput
-            ? getReferencesByIds(state, props.reference, inputVal)
-            : inputVal === null
+            ? inputVal.length === 0
+                ? null
+                : getReferencesByIds(state, props.reference, inputVal)
+            : inputVal === null || inputVal === undefined
                 ? null
                 : resourceState.data[inputVal],
         location: state.router.location,
