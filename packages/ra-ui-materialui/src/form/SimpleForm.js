@@ -70,6 +70,7 @@ export class SimpleForm extends Component {
             toolbar,
             undoable,
             version,
+            form,
             ...rest
         } = this.props;
 
@@ -85,6 +86,7 @@ export class SimpleForm extends Component {
                             input={input}
                             record={record}
                             resource={resource}
+                            form={form}
                         />
                     ))}
                 </CardContentInner>

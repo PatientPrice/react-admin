@@ -96,7 +96,7 @@ export class FilterForm extends Component {
         this.props.hideFilter(event.currentTarget.dataset.key);
 
     render() {
-        const { classes = {}, className, resource, ...rest } = this.props;
+        const { classes = {}, className, resource, form, ...rest } = this.props;
 
         return (
             <div
@@ -108,6 +108,7 @@ export class FilterForm extends Component {
                         key={filterElement.props.source}
                         filterElement={filterElement}
                         handleHide={this.handleHide}
+                        form={form}
                         classes={classes}
                         resource={resource}
                     />

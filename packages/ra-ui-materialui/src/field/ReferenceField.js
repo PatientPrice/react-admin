@@ -50,6 +50,7 @@ export const ReferenceFieldView = ({
                         children.props.className,
                         classes.link // force color override for Typography components
                     ),
+                    classes: children.props.classes,
                     record: referenceRecord,
                     resource: reference,
                     allowEmpty,

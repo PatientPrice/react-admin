@@ -23,6 +23,7 @@ interface ChildrenFuncParams {
     addLabel,
     className,
     label,
+    form,
     record,
     sortBy,
     source,
@@ -56,6 +57,7 @@ interface Props {
     reference: string;
     resource: string;
     source: string;
+    form,
     classes,
     translatedLabel,
     error,
@@ -189,7 +191,7 @@ export class UnconnectedReferenceArrayListInputController extends Component<Prop
             sortBy,
             source,
             data,
-
+            form,
             addLabel,
             label,
             ids,
@@ -217,6 +219,7 @@ export class UnconnectedReferenceArrayListInputController extends Component<Prop
             // classes,
             className,
             // children,
+            form,
             label,
             record,
             sortBy,
@@ -254,7 +257,8 @@ const mapStateToProps = (state, props) => {
     const resourceState = state.admin.resources[props.reference];
     const referenceBasePath = props.basePath.replace(props.resource, props.reference);
 
-    const inputVal = state.form["record-form"] ? get(state.form["record-form"].values, props.source) : null
+    const form = props.form || 'record-form'
+    const inputVal = state.form[form] ? get(state.form[form].values, props.source) : null
     // const inputVal = props.input.value === "" ? null : props.input.value
     const isArrayInput = Array.isArray(inputVal)
 

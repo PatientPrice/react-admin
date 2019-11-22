@@ -17,6 +17,7 @@ const FilterFormInput = ({
     resource,
     translate,
     locale,
+    form
 }) => (
     <div
         data-source={filterElement.props.source}
@@ -34,6 +35,7 @@ const FilterFormInput = ({
         )}
         <Field
             allowEmpty
+            props={{form}}
             {...sanitizeRestProps(filterElement.props)}
             name={filterElement.props.source}
             component={filterElement.type}

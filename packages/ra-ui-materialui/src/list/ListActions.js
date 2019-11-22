@@ -5,6 +5,7 @@ import { sanitizeListRestProps } from 'ra-core';
 
 import CardActions from '../layout/CardActions';
 import { CreateButton, ExportButton } from '../button';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const Actions = ({
     bulkActions,
@@ -22,9 +23,13 @@ const Actions = ({
     onUnselectItems,
     showFilter,
     total,
+    isLoading,
     ...rest
 }) => (
     <CardActions className={className} {...sanitizeListRestProps(rest)}>
+        {
+            isLoading && <CircularProgress size={20}/>
+        }
         {bulkActions &&
             cloneElement(bulkActions, {
                 basePath,
@@ -64,6 +69,7 @@ Actions.propTypes = {
     filters: PropTypes.element,
     filterValues: PropTypes.object,
     hasCreate: PropTypes.bool,
+    isLoading: PropTypes.bool,
     resource: PropTypes.string,
     onUnselectItems: PropTypes.func.isRequired,
     selectedIds: PropTypes.arrayOf(PropTypes.any),
